@@ -1,18 +1,27 @@
+"""
+OrcBench is a benchmark for serverless. OrcBench produces traces 
+which can be used by serveless platforms to test their service
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⣧⣄⣉⣉⣠⣼⣶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢰⣿⣿⣿⣿⡿⣿⣿⣿⣿⢿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣼⣤⣤⣈⠙⠳⢄⣉⣋⡡⠞⠋⣁⣤⣤⣧⠀⠀⠀⠀⠀⠀⠀
+⠀⢲⣶⣤⣄⡀⢀⣿⣄⠙⠿⣿⣦⣤⡿⢿⣤⣴⣿⠿⠋⣠⣿⠀⢀⣠⣤⣶⡖⠀
+⠀⠀⠙⣿⠛⠇⢸⣿⣿⡟⠀⡄⢉⠉⢀⡀⠉⡉⢠⠀⢻⣿⣿⡇⠸⠛⣿⠋⠀⠀
+⠀⠀⠀⠘⣷⠀⢸⡏⠻⣿⣤⣤⠂⣠⣿⣿⣄⠑⣤⣤⣿⠟⢹⡇⠀⣾⠃⠀⠀⠀
+⠀⠀⠀⠀⠘⠀⢸⣿⡀⢀⠙⠻⢦⣌⣉⣉⣡⡴⠟⠋⡀⢀⣿⡇⠀⠃⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢸⣿⣧⠈⠛⠂⠀⠉⠛⠛⠉⠀⠐⠛⠁⣼⣿⡇⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠸⣏⠀⣤⡶⠖⠛⠋⠉⠉⠙⠛⠲⢶⣤⠀⣹⠇⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣶⣿⣿⣿⣿⣿⣿⣶⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠛⠛⠛⠛⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
+WAAAGH!
+"""
+
 import click
-import requests
 import secrets
 
 from .internals import run
-from .internals.orcglobals import MODELS, MODEL_DIR, URL, CONTEXT_SETTINGS, RAW_DATA_DIR
-
-
-def download_model(num):
-    model_name = f"model-{num}.pickle"
-    model_url = f"{URL}/{model_name}"
-    response = requests.get(model_url)
-    model_path = MODEL_DIR / model_name
-    open(model_path, "wb").write(response.content)
-
+from .internals.orcglobals import MODELS, CONTEXT_SETTINGS, RAW_DATA_DIR
 
 @click.group()
 def cli():
@@ -47,16 +56,6 @@ def trace(n, scale, seed, runtime, out):
                 f.write(f"{t[0]}, {t[1]}, {t[2]}\n")
                 bar.update(1)
     click.echo(f"Unique Functions: {len(ids)}")
-
-
-@cli.command()
-def download():
-    MODEL_DIR.mkdir(parents=True, exist_ok=True)
-    with click.progressbar(length=MODELS, label="Downloading Models") as bar:
-        for i in range(0, MODELS):
-            download_model(i)
-            bar.update(1)
-
 
 @cli.command()
 @click.argument("model")

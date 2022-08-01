@@ -1,11 +1,11 @@
-import numpy as np
+import os
 import json
 import uuid
+from pathlib import Path
 
-from .orcglobals import MODELS, MODEL_DIR
+import numpy as np
 
-mods = [x for x in range(0, MODELS) if x not in [17, 7]]
-
+from .orcglobals import MODEL_DIR
 
 loaded_models = []
 
@@ -57,22 +57,12 @@ class Job:
         return [t for t in trace if t[0] < run_for]
 
 
-def check_ready():
-    for i in mods:
-        model_name = f"{i}-model"
-        model_path = MODEL_DIR / model_name
-        if not model_path.exists():
-            return False
-
-    return True
-
-
 def load_models():
-    for i in mods:
-        model_name = f"{i}-model"
-        model_path = MODEL_DIR / model_name
-        with open(model_path, "rb") as f:
-            loaded_models.append(Model(model_name, json.load(f)))
+    models_dir = Path(__file__).parent.parent / "models";
+    for f in os.listdir(models_dir):
+        model_path = models_dir.absolute() / f
+        with open(model_path, "rb") as file:
+            loaded_models.append(Model(f, json.load(file)))
 
     print("Model Functions: ", sum([x.weight for x in loaded_models]))
 
@@ -135,9 +125,6 @@ class Model:
 
 
 def get_jobs(n, scale, seed):
-    if not check_ready():
-        return None
-
     np.random.seed(seed)
 
     models = load_models()
