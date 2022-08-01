@@ -41,7 +41,7 @@ PDF of the paper can be found - [OrcBench: A Representative Serverless Benchmark
 @inproceedings{hancock:benchmarking,
   author    = {Ryan Hancock and
                Sreeharsha Udayashankar and
-               Ali Jos ́e Mashtizadeh and
+               Ali José Mashtizadeh and
                Samer Al-Kiswany},
   title     = {OrcBench: A Representative Serverless Benchmark},
   booktitle = {Proceedings of the15th International Conference on Cloud Computing (CLOUD'22)}
