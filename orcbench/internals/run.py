@@ -64,8 +64,6 @@ def load_models():
         with open(model_path, "rb") as file:
             loaded_models.append(Model(f, json.load(file)))
 
-    print("Model Functions: ", sum([x.weight for x in loaded_models]))
-
     return loaded_models
 
 
@@ -73,20 +71,19 @@ def _sample(inverse_ecdf, num, rand):
     samples = []
     for _ in range(0, num):
         p = rand.integers(0, high=len(inverse_ecdf) - 1)
-        samples.append(1 / inverse_ecdf[p])
+        samples.append(inverse_ecdf[p])
     return samples
 
 
 def python_function_template(runtime):
-    program = """
-    import time
-    import mmap
-    def lambda():
-        t = time.time()
-        # Busy wait so we consume cpu
-        while (time.time() - t) < {0}:
-            pass
-    """.format(
+    program = """import time
+import mmap
+def lambda_function():
+    t = time.time()
+    # Busy wait so we consume cpu
+    while (time.time() - t) < {0}:
+        pass
+""".format(
         runtime
     )
 
@@ -94,8 +91,8 @@ def python_function_template(runtime):
 
 
 def create_function(model, language="python"):
-    mbs = model.sample_mbs()
-    runtime = model.sample_cpu()
+    mbs = model.sample_mbs()[0]
+    runtime = model.sample_cpu()[0]
 
     if language == "python":
         program = python_function_template(runtime)
@@ -115,7 +112,7 @@ class Model:
         self.rand = np.random.default_rng(np.random.randint(0, 2 ** 32))
 
     def sample(self, num=1):
-        return _sample(self.inverse_invocation_ecdf, num, self.rand)
+        return np.reciprocal(_sample(self.inverse_invocation_ecdf, num, self.rand))
 
     def sample_mbs(self, num=1):
         return _sample(self.inverse_memory_ecdf, num, self.rand)

@@ -4,7 +4,6 @@ CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 ROOT = Path.home()
 DATA_DIR = Path.home() / ".local" / "orcbench"
 MODEL_DIR = DATA_DIR / "models"
-MODELS = 25
 URL = "https://rcs.uwaterloo.ca/~ryan/files/models"
 
 

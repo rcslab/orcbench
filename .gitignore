@@ -1,3 +1,6 @@
 __pycache__
 graphs
 orcbench_data
+dist
+trace.out
+

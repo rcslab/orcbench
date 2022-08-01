@@ -1,8 +1,10 @@
 [tool.poetry]
 name = "orcbench"
-version = "0.1.0"
+version = "0.1.2"
 description = "OrcBench: A Representative Serverless Benchmark"
+maintainers = ["Ryan Hancock <krhancoc@uwaterloo.ca>"]
 authors = ["Ryan Hancock <krhancoc@uwaterloo.ca>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
