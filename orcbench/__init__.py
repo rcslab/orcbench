@@ -1,5 +1,5 @@
 """
-OrcBench is a benchmark for serverless. OrcBench produces traces 
+OrcBench is a benchmark for serverless. OrcBench produces a workload trace
 which can be used by serveless platforms to test their service
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀

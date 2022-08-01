@@ -13,11 +13,24 @@
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣶⣿⣿⣿⣿⣿⣿⣶⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠛⠛⠛⠛⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ## OrcBench: A Representative Serverless Benchmark
+OrcBench generates a workload trace which can be consumed by serverless
+platforms to test their service. The models used by OrcBench are modeled off of
+Microsoft Azure and whos creation is outlined in our paper (referenced below).
 
-## Using
+### Installation
+```
+pip install orcbench
+```
 
-## Creating the models
-
+### Quick Start
+```
+orcbench trace
+```
+This will produce a standard trace (25% that of the original Microsoft
+Workload, `--scale 0.25`). nd produces jobs which will sample for 10 models
+(`--N 10`). With a runtime (`--runtime 30`) of 30 minutes. The seed (`--seed`)
+can be optionally set to produce deterministic workloads. The outputted
+(`--out`) trace is by default sent to `trace.out`. 
 
 ## Referencing Us 
 If you use this benchmark please make sure to cite us using the following citation
