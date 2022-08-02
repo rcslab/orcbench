@@ -26,6 +26,11 @@ pip install orcbench
 ```
 orcbench trace
 ```
+OR
+```
+python3 -m orcbench trace
+```
+
 This will produce a standard trace (25% that of the original Microsoft
 Workload, `--scale 0.25`). nd produces jobs which will sample for 10 models
 (`--N 10`). With a runtime (`--runtime 30`) of 30 minutes. The seed (`--seed`)
