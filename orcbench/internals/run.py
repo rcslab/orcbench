@@ -21,8 +21,8 @@ class Job:
         if ids is None:
             self.ids = [uuid.uuid1().hex for _ in range(0, num_functions)]
 
-        self.run_times = {id: self.model.sample_cpu() for id in self.ids}
-        self.memory = {id: self.model.sample_mbs() for id in self.ids}
+        self.run_times = {id: self.model.sample_cpu()[0] for id in self.ids}
+        self.memory = {id: self.model.sample_mbs()[0] for id in self.ids}
 
     def run_trace(self, run_for):
         cur_time = 0
@@ -46,9 +46,8 @@ class Job:
                 for v in sorted(self.rand.uniform(cur_time, cur_time + time, events)):
                     id = ids[0]
                     ids.pop(0)
-                    trace.append((v, id, self.model.name))
-                #                    trace.append((v, id, self.model.name,
-                #                        self.run_times[id], self.memory[id]))
+                    rt = self.rand.normal(self.run_times[id], 0.3 * self.run_times[id])
+                    trace.append((v, id, rt, self.model.name))
 
                 cur_time += time
 

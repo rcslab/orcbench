@@ -16,4 +16,4 @@ which can be used by serveless platforms to test their service
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠛⠛⠛⠛⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
 WAAAGH!
 """
-__version__ = '0.1.3'
+__version__ = '0.1.4'

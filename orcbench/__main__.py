@@ -1,8 +1,8 @@
 import click
 import secrets
 
-from .internals import run
-from .internals.orcglobals import CONTEXT_SETTINGS, RAW_DATA_DIR
+from orcbench.internals import run
+from orcbench.internals.orcglobals import CONTEXT_SETTINGS, RAW_DATA_DIR
 
 @click.group()
 def cli():
@@ -32,9 +32,10 @@ def trace(n, scale, seed, runtime, out):
     ids = set()
     with open(out, "w") as f:
         with click.progressbar(length=len(trace), label="Writing trace") as bar:
+            f.write("Logical Time Clock (minutes), Function ID, Runtime (ms), Model")
             for t in trace:
                 ids.add(t[1])
-                f.write(f"{t[0]}, {t[1]}, {t[2]}\n")
+                f.write(f"{t[0]}, {t[1]}, {t[2]}, {t[3]}\n")
                 bar.update(1)
     click.echo(f"Unique Functions: {len(ids)}")
 
@@ -62,7 +63,9 @@ def create(data):
     from .models import create_models
     create_models(data)
 
-
-if __name__ == "__main__":
+def main():
     main_cli = click.CommandCollection(sources=[cli], context_settings=CONTEXT_SETTINGS)
     main_cli(prog_name="OrcBench")
+
+if __name__ == "__main__":
+    main()
